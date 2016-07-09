@@ -14,6 +14,9 @@ public class Client4 {
         //监听端口3004，即监听client1端
         ServerSocket ss = new ServerSocket(3004);
         Socket s = ss.accept();         //accept返回值就是一个socket
+        if(s.isConnected()) {
+            System.out.print("client4 and client1 connected.\r\n");
+        }
         while (true){
             BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream())); //读取输入socket的内容,buffer是字符流,stream是字节流,该句括号作用是转换
             String line = br.readLine();
@@ -25,12 +28,12 @@ public class Client4 {
             //s.close();
             Thread.sleep(200);
             //睡眠0.2秒后发送给下一个功能
-            Socket s7 = new Socket("",3007);//TODO 没写下个功能的地址
+            Socket s7 = new Socket("10.108.70.140",3009);//TODO 没写下个功能的地址
             if(s7.isConnected()) {
-                System.out.print("connected.\r\n");
+                System.out.print("client4 and server connected.\r\n");//TODO remember to change
             }
             PrintStream ps1 = new PrintStream(s7.getOutputStream());
-            ps1.print(s.getInputStream());    //TODO 输出是字节流，line是字符流，估计这会出错
+            ps1.print("Data from client4:"+s.getInputStream());    //TODO 输出是字节流，line是字符流，估计这会出错
         }
     }
 }
